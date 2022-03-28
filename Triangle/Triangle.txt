@@ -1,0 +1,140 @@
+## 정점 입력
+
+	1. 정점 그리기
+
+		정점을 3개 입력하여 삼각형을 그려보자
+
+			정점 데이터 준비
+
+			Vertex buffer object (VBO) 준비
+
+			Vertex buffer object에 정점 데이터 입력
+
+				CPU memory 상에 있는 정점 데이터를 GPU로 옮기는 작업
+
+
+			Vertex array object (VAO) 준비
+				
+				우리의 정점 데이터의 구조를 알려주는 descriptor object
+				
+				(ex) float인지 int인지, 3차원인지, 2차원인지 등등 
+
+			Program, VBO, VAO를 사용하여 그림 그리기
+
+
+	
+	2. VERTEX BUFFER OBJECT
+
+		Vertex buffer object (VBO)
+			
+			정점 데이터를 담은 버퍼 오브젝트
+
+			정점에 대한 다양한 데이터를 GPU가 접근 가능한 메모리에 저장해준다.
+
+				position, normal, tangent, color, texture coordiante 등등
+
+
+
+		(1). 함수 설명
+
+			ㄱ. glGenBuffers() : 새로운 buffer object를 만든다
+
+			ㄴ. glBindBuffer() : 지금부터 사용할 buffer object를 지정한다.
+
+								GL_ARRAY_BUFFER : 사용할 buffer object는 vertex data를 저장할 용도임을 알려줌
+
+			ㄷ. glBufferData() : 지정된 buffer에 데이터를 복사한다.
+
+								데이터의 총 크기, 데이터 포인터, 용도 지정한다
+
+								용도 
+									STATIC | DYNAMIC | STREAM
+									DRAW | COPY | READ
+								들의 조합
+
+
+		(2). 우리의 VBO에 복사한 데이터의 구조
+
+
+			정점 총 3개
+			각 정점의 위치가 기록
+			위치에 대해서 x/y/z 좌표값을 가짐
+			각 좌표값마다 float = 4byte의 크기를 가짐
+			첫번째 정점과 두번째 정점 간의 간겨이 12 byte 차이
+
+
+		(3). VBO가 가진 정점에 대한 구조(layout)를 알려줄 방법이 있어야 함
+
+
+	3. VERTEX ARRAY object
+	
+		Vertex Array Object (VAO)
+
+			정점 데이터의 구조를 알려주는 오브젝트
+
+			각 정점은 몇 byte로 구성되어있는가?
+
+			두 정점은 몇 byte만큼 떨어져 있는가?
+
+			정점의 0번째 데이터는 어떤 사이즈의 데이터가 몇개 있는 형태인가?
+
+
+		(1). 함수 설명
+
+			glGenVertexArrays() : VAO 생성
+
+			glBindVertexArray() : 지금부터 사용할 VAO 설정
+
+			glEnableVertexAttribArray(n) : 정점
+										    attribute 중 n번째를 사용하도록 설정
+
+
+		(2). 순서 주의
+
+			VAO binding
+
+			VBO binding
+
+			vertex attribute setting
+
+			vertex attribute을 설정하기 전에 VBO가 바인딩 되어있을 것
+
+
+
+	4. DRAW array
+
+		(1). 함수 설명
+
+			glDrawArray(primitive, offset, count)
+
+				현재 설정된 program, VBO, VAO로 그림을 그린다.
+
+				primitive : 그리고자 하는 primitive 타입
+
+				offset : 그리고자 하는 첫 정점의 index
+
+				count : 그리려는 정점의 총 개수
+
+
+	5. ELEMENT BUFFER object
+
+		Element Buffer Object (EBO)
+
+			정점의 인덱스를 저장할 수 있는 버퍼
+
+			인덱스 버퍼라고도 부름
+
+			정점 정보와 별개로 정점의 인덱스로만 구성된 삼각형 정보를 전달 가능
+
+			indexed drawing
+
+
+	6. REFACTORING
+
+		Buffer 클래스
+
+			VBO 혹은 EBO를 가질 수 있음
+
+			생성 시 정점 데이터 혹은 인덱스 데이터를 제공하면, 해당 데이터를 GPU 메모리에 저장한 버퍼 오브젝트 생성
+
+			메모리 해제 시 버퍼 오브젝트 제거

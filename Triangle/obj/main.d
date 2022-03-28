@@ -149,7 +149,8 @@ obj/main.o: src/main.cpp /usr/include/stdc-predef.h include/common.h \
  /usr/include/c++/11/bits/vector.tcc include/glad/glad.h \
  include/KHR/khrplatform.h /usr/include/GLFW/glfw3.h /usr/include/GL/gl.h \
  include/shader.h include/common.h include/program.h include/shader.h \
- include/context.h include/program.h /usr/include/c++/11/iostream \
+ include/context.h include/program.h include/buffer.h \
+ include/vertex_layout.h /usr/include/c++/11/iostream \
  /usr/include/c++/11/ostream /usr/include/c++/11/ios \
  /usr/include/c++/11/bits/ios_base.h \
  /usr/include/c++/11/bits/locale_classes.h \
