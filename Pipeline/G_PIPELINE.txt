@@ -1,0 +1,52 @@
+
+## GRAPHICS PIPELINE
+
+	1. 순서
+
+		Application >> Geomtry >> Rasterization >> Pixel
+
+		
+		Application : 그리고 싶은 정점의 위치 / 색상 등을 입력
+
+
+		Geomtry : 정점 단위의 처리, 정점의 위치 결정
+
+
+		Rasterization : 정점 단위로 구성된 삼각형을 픽셀 단위로 변경
+
+
+		Pixel : 픽셀 단위의 처리, 픽셀 색상의  결정
+
+
+	2. 애플리케이션 프로그램 영역
+		OpenGL 함수 호출
+			>> Application
+
+	3. GPU 영역
+			>> Geomtry
+			>> Rasterization
+			>> Pixel
+
+## Customer Pipeline
+
+	1. PROGRAMMABLE SHADER
+		
+		Shader : 각 파이프라인 단계마다 GPU 상에서 실행되는 작은 프로그램
+
+		GLSH : GL Shading Language라는 C기반 프로그래밍 언어로 작성
+
+	2. 순서
+
+		Vertex Data[] >> Vertes Shader >> Shape Assmebly >> Geomtry Shader >> Rasterization >> Fragment Shader >> Tests and Blending
+
+	
+	3. Opengl SHADER
+
+		OpenGL은 그림을 그려내기 위해 두 개의 Shader가 반드시 필요
+
+		(1). Vertex SHADER
+		(2). Fragment SHADER
+
+		Shader 코드는 OpenGL 코드 내에서 빌드/로딩됨
+
+		미리 빌드한 뒤 로딩하는 방법 : SPIR-V 이용

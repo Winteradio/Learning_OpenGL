@@ -1,0 +1,53 @@
+## SMART Pointer
+
+	1. Smart Pointer
+
+		C++11 부터 사용 가능한 좀 더  안전한 포인터
+
+		메모리 할당을 받을 때 소유권에 대한 정보가 있다.
+
+		명시적인 delete 구문이 필요없다.
+
+		(1). std::unique_ptr<> : 해당 메모리 블록을 단독으로 소유
+
+		(2). std::shared_ptr<> : 해당 메모리 블록의 소유권을 공유
+
+		(3). std::weak_ptr<> : 해당 메모리 소유권은 없지만 접근은 가능한
+
+
+	2. 어떻게 안전한가?
+
+		일반 포인터를 이용한 경우 : 반드시 메모리 해제를 해줘야 함
+
+		int* a = new int;
+		int* b = a;
+
+		//a 메모리 블록 만큼의 memory leak 발생
+
+		delete a;
+		delete b; >> 동일한 주소에 있는 메모리를 해제할 때 문제 발생
+		// 두 번 메모리를 해제하여 문제 발생
+
+
+		(1). unique_ptr를 사용하는 경우
+			
+			소유권을 가진 인스턴스가 스코프 밖으로 벗어났을 때 메모리 자동 해제
+
+			std::unique_ptr<int> a = std::make_unique();
+			int* b = a.get();
+
+
+			소유권을 가진 인스턴스가 일반적인 방법으로 다른 쪽에 소유권을 이전하려는 경우 에러 발생
+
+			std::unique_ptr<int> a = std::make_unique();
+			std::unique_ptr<int> b = a; // error 발생
+
+			
+			std::move() 함수를 사용해서 명시적으로 소유권 이전 가능하다
+			대신 이전에 소유권을 가진 인스턴스는 nullptr을 갖게 된다.
+
+			std::unique_ptr<int> a = std::make_unique();
+			std::unique_ptr<int> b = std::move();
+			// a는 nullptr가 되어 더 이상 사용 불가능
+
+
