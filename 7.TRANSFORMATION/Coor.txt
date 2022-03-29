@@ -1,0 +1,99 @@
+## Coordinate System
+
+	1. 좌표계
+		
+		어떤 정점의 위치를 기술하기 위한 기준
+
+		선형 변환은 한 좌표계로 기술된 벡터를 다른 좌표계에 대해 기술하는 변환으로 해석할 수 있음
+
+	
+	2. 자주 사용되는 좌표계 용어
+
+		World space
+
+		Local(Object) space
+
+		View(Eye) scale
+
+		Screen space
+
+
+	3. 좌표 공간의 변화
+
+		OpenGL의 그림이 그려지는 공간 
+			
+			[-1, 1] 범위로 normalized된 공간
+
+			Canonical space
+
+		Object들은 Local space를 기준으로 기술
+
+		Local Space -> World Space -> View Space -> Canonical Space로 변환
+
+		MVP Matrix 
+
+
+	4.	Transform Matrix
+
+		Model : Local을 World로
+
+		View : World를 Camera로
+
+		Projection : Camera를 Canonical로
+
+		Clip space에서 [-1,1] 범위 밖으로 벗어난 면들은 clipping
+
+
+	5. 투영
+
+		(1). 직교 투영(ORTHOGONAL PROJECTION)
+
+			원근감 없이 평행한 선이 계속 평행하도록 투영하는 방식
+
+			설계 도면 또는 등을 그려낼 때 유용
+
+			손 좌표계
+				
+				x축, y축을 화면의 오른/위 방향으로 했을 때
+
+				ㄱ. 오른손 좌표계
+					
+					z축이 화면에서부터 나오는 방향
+
+				ㄴ. 왼손 좌표계
+					
+					z축이 화면으로 들어가는 방향
+
+
+
+		(2). 원근 투영(PERSPECTIVE PROJECTION)
+
+			변환 이전에 평행한 선이 변환 후에 한점에서 만남(소실점)
+
+			멀리 있을 수록 물체가 작아져 원근감이 발생
+
+			파라미터
+
+				종횡비(aspect ratio)
+
+				화각(field of view, Fov)
+
+				near, far
+
+
+	6. TRANSFORMATION
+
+		모든 변환의 조합
+
+			Local Space를 기준으로 한 좌표 V의 Clip space에서의 좌표
+
+			합쳐서 MVP Matrix라고 한다
+
+			V clip = M projection * M view * M model * V local
+
+
+	7. 화면 좌표계 - 왼손 좌표계:
+		ㅅ y축	
+		ㅅ
+			>>> x축
+		X z축 (들어가는 방향)
