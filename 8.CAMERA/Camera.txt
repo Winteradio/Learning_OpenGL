@@ -1,0 +1,51 @@
+## CAMERA
+
+	1. Camera / View Space
+
+		3D 공간을 어느 시점에서 어떤 방향으로 바라볼 것인가를 결정
+
+		카메라를 조작하기 위한 파라미터로부터 view transform을 유도
+
+	
+	2. 카메라 파라미터
+
+		Camera Position : 카메라의 위치
+
+		Camera Target : 카메라가 바라보는 중심 위치
+
+		Camera Up Vector : 카메라 화면의 세로 축 방향
+
+
+		결과 행렬
+			
+			Camera의 Local-to-World Transform의 Inverse
+
+
+	3. 카메라의 3축 결정 과정
+
+		e = camera Position
+		t = camera Target
+		u = camera upvector
+
+		z = (e-t) / |e-t|
+		x = (u x z) / |u x z|
+		y = (z x x)
+
+
+	4. INTERACTIVE CAMERA
+
+		(1). Euler angle
+
+			물체의 회전 정보를 나타내는 대표적인 방식
+
+			roll(z), pitch(x), yaw(y) 3개의 회전각
+
+			카메라 회전각
+				
+				카메라 회전에 roll은 보통 사용하지 않음
+					
+					대신 up vector를 기준으로 roll을 설정
+
+				따라서 yaw, pitch만 가지고 camera front 방향을 결정
+
+
