@@ -13,10 +13,10 @@ ContextUPtr Context::Create(){
 bool Context::Init(){
 
 	float vertices[] = {
-		0.5f,-0.5f,0.0f,
-		0.5f,0.5f,0.0f,
-		-0.5f,0.5f,0.0f,
-		-0.5f,-0.5f,0.0f,
+		0.5f,-0.5f,0.0f,1.0f,0.0f,0.0f,
+		0.5f,0.5f,0.0f,0.0f,1.0f,0.0f,
+		-0.5f,0.5f,0.0f,0.0f,0.0f,1.0f,
+		-0.5f,-0.5f,0.0f,1.0f,1.0f,0.0f
 	};
 
 	uint32_t indices[] = {
@@ -27,15 +27,16 @@ bool Context::Init(){
 	// VAO - Array Object를 만들고 Buffer Object를 만든다
 	m_vertexLayout = VertexLayout::Create();
 	// VBO
-	m_vertexBuffer = Buffer::CreateWithData(GL_ARRAY_BUFFER, GL_STATIC_DRAW, vertices, sizeof(float) * 12);
+	m_vertexBuffer = Buffer::CreateWithData(GL_ARRAY_BUFFER, GL_STATIC_DRAW, vertices, sizeof(float) * 24);
 	// VAO - VBO 연결
-	m_vertexLayout->SetAttrib(0,3,GL_FLOAT,GL_FALSE,sizeof(float)*3,0);
+	m_vertexLayout->SetAttrib(0,3,GL_FLOAT,GL_FALSE,sizeof(float)*6,0);
+	m_vertexLayout->SetAttrib(1,3,GL_FLOAT,GL_FALSE,sizeof(float)*6,sizeof(float)*3);
 	// EBO
 	m_indexBuffer = Buffer::CreateWithData(GL_ELEMENT_ARRAY_BUFFER, GL_STATIC_DRAW, indices, sizeof(float) *6);
 	
 	// Shader
-	ShaderPtr vertShader = Shader::CreateFromFile("shader/simple.vs",GL_VERTEX_SHADER);
-	ShaderPtr fragShader = Shader::CreateFromFile("shader/simple.fs",GL_FRAGMENT_SHADER);
+	ShaderPtr vertShader = Shader::CreateFromFile("shader/per_vertex_shader.vs",GL_VERTEX_SHADER);
+	ShaderPtr fragShader = Shader::CreateFromFile("shader/per_vertex_color.fs",GL_FRAGMENT_SHADER);
 
 	if(!vertShader|| !fragShader){ // or >> || :: and >> &&
 		return false;
@@ -44,7 +45,6 @@ bool Context::Init(){
 
 	// Program
 	m_program = Program::Create({fragShader,vertShader});
-
 	if (!m_program){
 		return false;
 	}
@@ -58,4 +58,5 @@ void Context::Render(){
 
 	m_program->Use();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
+
 }
